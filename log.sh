@@ -1,5 +1,10 @@
 #!/bin/bash
 
+set -o errexit
+debg="${true}"
+[[ "${DEBUG}" == 'true' ]] && set -o xtrace
+set -o pipefail
+
 IP_RANGE=$1
 WD=/tmp
 

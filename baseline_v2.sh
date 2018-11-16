@@ -1,7 +1,7 @@
+#!/bin/bash
+
 # This script, when given an IP range to scan, will begin to generate an asset whitelist to be used alongside the alarm_scan.sh script.
 # Note that this script ought to be run multiple times over a period of time, and the results need to be analyzed in order to determine a final whitelist.
-
-#!/bin/bash
 
 set -o errexit
 DEBUG='false'; [[ "${DEBUG}" == 'true' ]] && set -o xtrace

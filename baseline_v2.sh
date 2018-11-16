@@ -45,6 +45,7 @@ done
 # Here, the final whitelist is either created or extended.
 if [ -e ~/FINAL_WHITELIST.txt ]; then
 	_compare_wls ~/FINAL_WHITELIST.txt $WD/whitelist.txt;
+	rm -f $WD/whitelist.txt;
 else
 	mv $WD/whitelist.txt ~/FINAL_WHITELIST.txt;
 fi

@@ -1,6 +1,6 @@
-# This script, when given an IP address range to scan, a delay time, and the existence of a FINAL_WHITELIST.txt in the root /home directory, will notify you of new devices connecting to a restricted network.
-
 #!/bin/bash
+
+# This script, when given an IP address range to scan, a delay time, and the existence of a FINAL_WHITELIST.txt in the root /home directory, will notify you of new devices connecting to a restricted network.
 
 set -o errexit
 DEBUG='false'; [[ "${DEBUG}" == 'true' ]] && set -o xtrace

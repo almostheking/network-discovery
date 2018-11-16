@@ -1,6 +1,6 @@
-# This script logs connections and disconnections from a given network by periodically scanning for active devices.
-
 #!/bin/bash
+
+# This script logs connections and disconnections from a given network by periodically scanning for active devices.
 
 set -o errexit
 DEBUG='false'; [[ "${DEBUG}" == 'true' ]] && set -o xtrace

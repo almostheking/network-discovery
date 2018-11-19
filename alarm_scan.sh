@@ -10,6 +10,8 @@ readonly IP_RANGE=$1
 readonly DELAY_TIME=$2
 readonly WD=/tmp
 readonly HOME=/home/scanman
+readonly RECIPIENTS=$3
+readonly FROM=$4
 
 # Function performs nmap ping/ARP scan and attempts to resolve hostnames.
 # Scan results are parsed.
@@ -29,7 +31,7 @@ gen_report () {
 # Function sends alarm email. Must be manually configured to send email to desired recipients.
 # The sleep command allows for the configuration of a delay after an alarm is sent so that the script doesn't flood you with identical alarms before you can investigate fully.
 mailtime () {
-	mail -s "Scanner ALARM" jlignelli@mrwsystems.com ajefferson@mrwsystems.com -a "FROM:netgarde@mrwsystems.com" < $WD/alarm_report_final.txt;
+	mail -s "Scanner ALARM" $RECIPIENTS -a "FROM:$FROM" < $WD/alarm_report_final.txt;
 	rm -f $WD/alarm_scan.txt $WD/diffs.txt $WD/alarm_report*.txt;
 	sleep $DELAY_TIME;
 }

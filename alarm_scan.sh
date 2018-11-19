@@ -29,7 +29,7 @@ gen_report () {
 # Function sends alarm email. Must be manually configured to send email to desired recipients.
 # The sleep command allows for the configuration of a delay after an alarm is sent so that the script doesn't flood you with identical alarms before you can investigate fully.
 mailtime () {
-	mail -s "Scanner ALARM" jlignelli@mrwsystems.com -a "FROM:netgarde@mrwsystems.com" < $WD/alarm_report_final.txt;
+	mail -s "Scanner ALARM" jlignelli@mrwsystems.com ajefferson@mrwsystems.com -a "FROM:netgarde@mrwsystems.com" < $WD/alarm_report_final.txt;
 	rm -f $WD/alarm_scan.txt $WD/diffs.txt $WD/alarm_report*.txt;
 	sleep $DELAY_TIME;
 }

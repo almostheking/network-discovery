@@ -9,6 +9,7 @@ set -o pipefail
 
 readonly IP_RANGE=$1
 readonly WD=/tmp
+readonly HOME=/home/scanman
 
 # Function scans and parses given IP range.
 _scan_and_parse () {
@@ -43,9 +44,9 @@ do
 done
 
 # Here, the final whitelist is either created or extended.
-if [ -e ~/FINAL_WHITELIST.txt ]; then
-	_compare_wls ~/FINAL_WHITELIST.txt $WD/whitelist.txt;
+if [ -e $HOME/FINAL_WHITELIST.txt ]; then
+	_compare_wls $HOME/FINAL_WHITELIST.txt $WD/whitelist.txt;
 	rm -f $WD/whitelist.txt;
 else
-	mv $WD/whitelist.txt ~/FINAL_WHITELIST.txt;
+	mv $WD/whitelist.txt $HOME/FINAL_WHITELIST.txt;
 fi

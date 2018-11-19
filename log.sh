@@ -10,6 +10,7 @@ readonly IP_RANGE=$1
 readonly FULLDATE=$(date)
 readonly DATESTAMP=$(date | awk '{print $1,$2,$3}')
 readonly WD=/tmp
+readonly SD=/home/scanman/asset_log
 
 # Function scans and parses IP range results.
 _scan_and_parse () {
@@ -38,12 +39,12 @@ _addsub_lists () {
 _proc_addsub_lists () {
 	if [[ $(wc -w <$WD/sub.txt) -gt 0 ]]; then
 		awk -v var="~$FULLDATE DISCONNECTED: " '{print var$0}' $WD/sub.txt > $WD/tmp && mv $WD/tmp $WD/sub.txt;
-		cat $WD/sub.txt >> /home/scanman/cumulative.txt;
+		cat $WD/sub.txt >> $SD/cumulative.txt;
 	fi
 
 	if [[ $(wc -w <$WD/add.txt) -gt 0 ]]; then
 		awk -v var="~$FULLDATE CONNECTED: " '{print var$0}' $WD/add.txt > $WD/tmp && mv $WD/tmp $WD/add.txt;
-		cat $WD/add.txt >> /home/scanman/cumulative.txt;
+		cat $WD/add.txt >> $SD/cumulative.txt;
 	fi
 
 	mv $WD/scanlist.txt $WD/rolling.txt; 
@@ -51,16 +52,16 @@ _proc_addsub_lists () {
 
 # Function archives the running log file and clears the way for a new one to be made
 _archive_cumulo () {
-	tar -cvf "$(cat /home/scanman/cumulative.txt | grep "Log Generated: " | awk '{print $3,$4,$5}')_archive.tar" /home/scanman/cumulative.txt;
-	rm -f $WD/rolling.txt /home/scanman/cumulative.txt;
+	tar -cvf "$(cat $SD/cumulative.txt | grep "Log Generated: " | awk '{print $3,$4,$5}')_archive.tar" $SD/cumulative.txt;
+	rm -f $WD/rolling.txt $SD/cumulative.txt;
 }
 
 # Creates a new running log file based on scanlists results
 _gen_cumulo () {
 	mv $WD/scanlist.txt $WD/rolling.txt;
-	echo -e "Log Generated: $FULLDATE\n" > /home/scanman/cumulative.txt;
-	echo -e "INITIAL SCAN:\n" >> /home/scanman/cumulative.txt; cat $WD/rolling.txt >> /home/scanman/cumulative.txt;
-	echo -e "\n" >> /home/scanman/cumulative.txt;
+	echo -e "Log Generated: $FULLDATE\n" > $SD/cumulative.txt;
+	echo -e "INITIAL SCAN:\n" >> $SD/cumulative.txt; cat $WD/rolling.txt >> $SD/cumulative.txt;
+	echo -e "\n" >> $SD/cumulative.txt;
 }
 
 _promote_cleanliness () {
@@ -74,7 +75,7 @@ do
 done
 
 if [ -e $WD/rolling.txt ]; then
-	if [[ $DATESTAMP = $(cat /home/scanman/cumulative.txt | grep "Log Generated: " | awk '{print $3,$4,$5}') ]]; then
+	if [[ $DATESTAMP = $(cat $SD/cumulative.txt | grep "Log Generated: " | awk '{print $3,$4,$5}') ]]; then
 		_addsub_lists
 		_proc_addsub_lists
 		_promote_cleanliness

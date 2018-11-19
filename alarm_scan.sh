@@ -39,7 +39,7 @@ if [ -e $WD/alarm_scan.lock ]; then
 	exit;
 else
 	touch $WD/alarm_scan.lock;
-	_scan_and_parse | sort > $WD/alarm_scan.txt; cp $WD/alarm_scan.txt $HOME/alarm_scan_log/alarm_scan_$(date).txt;
+	_scan_and_parse | sort > $WD/alarm_scan.txt; cp $WD/alarm_scan.txt $HOME/alarm_scan_log/"alarm_scan_$(date).txt";
 	comm -13 ~/FINAL_WHITELIST.txt $WD/alarm_scan.txt > $WD/diffs.txt;
 	#echo "TEST" >> $WD/diffs.txt;
 

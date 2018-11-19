@@ -9,6 +9,7 @@ set -o pipefail
 readonly IP_RANGE=$1
 readonly DELAY_TIME=$2
 readonly WD=/tmp
+readonly HOME=/home/scanman
 
 # Function performs nmap ping/ARP scan and attempts to resolve hostnames.
 # Scan results are parsed.
@@ -38,7 +39,7 @@ if [ -e $WD/alarm_scan.lock ]; then
 	exit;
 else
 	touch $WD/alarm_scan.lock;
-	_scan_and_parse | sort > $WD/alarm_scan.txt; cp $WD/alarm_scan.txt /home/joe/alarm_scan.txt;
+	_scan_and_parse | sort > $WD/alarm_scan.txt; cp $WD/alarm_scan.txt $HOME/alarm_scan_log/alarm_scan_$(date).txt;
 	comm -13 ~/FINAL_WHITELIST.txt $WD/alarm_scan.txt > $WD/diffs.txt;
 	#echo "TEST" >> $WD/diffs.txt;
 

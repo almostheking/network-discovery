@@ -52,7 +52,7 @@ _proc_addsub_lists () {
 
 # Function archives the running log file and clears the way for a new one to be made
 _archive_cumulo () {
-	tar -cvf "$(cat $SD/cumulative.txt | grep "Log Generated: " | awk '{print $3,$4,$5}')_archive.tar" $SD/cumulative.txt;
+	tar -cvf $SD/"$(cat $SD/cumulative.txt | grep "Log Generated: " | awk '{print $3,$4,$5}')_archive.tar" $SD/cumulative.txt;
 	rm -f $WD/rolling.txt $SD/cumulative.txt;
 }
 
